@@ -19,16 +19,13 @@ module.exports = {
       "appleIdPassword": process.env['APPLE_ID_PASSWORD']
     }
   },
-  "electronWinstallerConfig": {
-    "name": "electron_example",
-    "certificateFile": "./example-electron.pfx",
-    "certificatePassword": process.env['CERTIFICATE_PASSWORD']
+  "electronWinstallerConfig": { 
   },
   "electronInstallerDMG": {},
   "electronInstallerDebian": {},
   "electronInstallerRedhat": {},
   "github_repository": {
-    "owner": "rllola",
+    "owner": "tuo",
     "name": "electron-example"
   },
   "windowsStoreConfig": {

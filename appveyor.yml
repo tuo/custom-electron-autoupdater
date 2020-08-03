@@ -3,7 +3,7 @@ platform:
 
 environment:
   GITHUB_TOKEN:
-    secure: E4qaT3siPp/6JLtpXmRRfnQytPM1RZ+9ifyhBnxCHBetp2UYYUHZwKcu+PvQGZkz
+    secure: 4e304e0401792ac45c1222555c044c21780574a6
 
 init:
   - git config --global core.autocrlf input
