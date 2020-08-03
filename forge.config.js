@@ -19,7 +19,8 @@ module.exports = {
       "appleIdPassword": process.env['APPLE_ID_PASSWORD']
     }
   },
-  "electronWinstallerConfig": { 
+  "electronWinstallerConfig": {
+    "name": "electron_example"
   },
   "electronInstallerDMG": {},
   "electronInstallerDebian": {},

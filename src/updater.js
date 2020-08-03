@@ -3,7 +3,6 @@ const APP_VERSION = require('../package.json').version
 //import log from 'log-to-file'
 const log = require('electron-log');
 
-
 console.log(app.getPath('logs'));
 console.log('process.platform', process.platform, APP_VERSION);
 
@@ -11,9 +10,31 @@ console.log('process.platform', process.platform, APP_VERSION);
 // The url that the application is going to query for new release
 //const AUTO_UPDATE_URL =
   'https://api.update.rocks/update/github.com/tuo/electron-example/stable/' + process.platform + '/' + APP_VERSION
-const AUTO_UPDATE_URL = 'http://ssl.6edigital.com/tuo_test/' + APP_VERSION + '.json';
+let AUTO_UPDATE_URL = 'https://ssl.6edigital.com/tuo_test/' + APP_VERSION + '.json?t=' + Date.now();
+//AUTO_UPDATE_URL = `https://api.update.rocks/update/github.com/rllola/electron-example/stable/win32/0.0.23`;
+AUTO_UPDATE_URL = 'https://6e-e7one.coherencedigital.com/tuo_madmapper/0.0.23.json?t=' + Date.now();
 log.info(`AUTO_UPDATE_URL:` + AUTO_UPDATE_URL  + `, appversion: ` + APP_VERSION);
+
+
+
+
+
 function init () {
+
+  const { net } = require('electron')
+  const request = net.request(AUTO_UPDATE_URL)
+  request.on('response', (response) => {
+    log.info(`STATUS: ${response.statusCode}`)
+    log.info(`HEADERS: ${JSON.stringify(response.headers)}`)
+    response.on('data', (chunk) => {
+      log.info(`BODY: ${chunk}`)
+    })
+    response.on('end', () => {
+      log.info('No more data in response.')
+    })
+  })
+  request.end()
+  
   if (process.platform === 'linux') {
     log.info('Auto updates not available on linux')
   } else {
@@ -57,6 +78,7 @@ function initDarwinWin32 () {
       })
     }
   )
+ 
 
   electron.autoUpdater.setFeedURL(AUTO_UPDATE_URL)
   electron.autoUpdater.checkForUpdates()
