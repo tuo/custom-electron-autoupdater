@@ -1,16 +1,16 @@
 import { app, BrowserWindow, dialog } from 'electron'
 import updater from './updater'
 import isDev from 'electron-is-dev'
-import log from 'log-to-file'
-
-log(process.argv, 'electron-example.log')
+//import log2 from 'log-to-file'
+const log = require('electron-log');
+log.info(process.argv)
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
 const createWindow = () => {
-  log('Creating window', 'electron-example.log')
+  log.info('Creating window')
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -20,14 +20,14 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`)
-
+  
   if (isDev) {
     // Open the DevTools.
     mainWindow.webContents.openDevTools()
   } else {
     // Handle squirrel event. Avoid calling for updates when install
     if(require('electron-squirrel-startup')) {
-      log('Squirrel events handle', 'electron-example.log')
+      log.info('Squirrel events handle')
       app.quit()
       // Hack because app.quit() is not immediate
       process.exit(0)
@@ -36,21 +36,21 @@ const createWindow = () => {
     if (process.platform === 'win32') {
       var cmd = process.argv[1]
       if (cmd === '--squirrel-firstrun') {
-        log('Squirrel first run', 'electron-example.log')
+        log.info('Squirrel first run')
         return
       }
     }
 
     // Check for updates
     mainWindow.webContents.once("did-frame-finish-load", function (event) {
-      log('Ready to look for update', 'electron-example.log')
+      log.info('Ready to look for update')
       updater.init()
     })
   }
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
-    log('Closing app', 'electron-example.log')
+    log.info('Closing app')
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.

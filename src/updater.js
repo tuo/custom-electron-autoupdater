@@ -12,12 +12,12 @@ console.log('process.platform', process.platform, APP_VERSION);
 //const AUTO_UPDATE_URL =
   'https://api.update.rocks/update/github.com/tuo/electron-example/stable/' + process.platform + '/' + APP_VERSION
 const AUTO_UPDATE_URL = 'http://ssl.6edigital.com/tuo_test/' + APP_VERSION + '.json';
-log.info(`AUTO_UPDATE_URL: AUTO_UPDATE_URL` + AUTO_UPDATE_URL)
+log.info(`AUTO_UPDATE_URL:` + AUTO_UPDATE_URL  + `, appversion: ` + APP_VERSION);
 function init () {
   if (process.platform === 'linux') {
-    console.log('Auto updates not available on linux')
+    log.info('Auto updates not available on linux')
   } else {
-    console.log(AUTO_UPDATE_URL)
+    log.info('initDarwinWin32: ' + AUTO_UPDATE_URL)
     initDarwinWin32()
   }
 }
@@ -29,7 +29,7 @@ function initDarwinWin32 () {
 
   electron.autoUpdater.on(
     'checking-for-update',
-    () => log('Checking for update' ))
+    () => log.info('Checking for update' ))
 
   electron.autoUpdater.on(
     'update-available',
