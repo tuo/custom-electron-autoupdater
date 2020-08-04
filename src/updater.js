@@ -1,44 +1,35 @@
-import electron, {dialog, app} from 'electron'
+import electron, {dialog, app, autoUpdater} from 'electron'
 const APP_VERSION = require('../package.json').version
 //import log from 'log-to-file'
-const log = require('electron-log');
 
-console.log(app.getPath('logs'));
-console.log('process.platform', process.platform, APP_VERSION);
+const logger = require("electron-log")
+logger.transports.file.level = "info"
 
+const DownloadManager = require("electron-download-manager");
 
-// The url that the application is going to query for new release
-//const AUTO_UPDATE_URL =
-  'https://api.update.rocks/update/github.com/tuo/electron-example/stable/' + process.platform + '/' + APP_VERSION
-let AUTO_UPDATE_URL = 'https://ssl.6edigital.com/tuo_test/' + APP_VERSION + '.json?t=' + Date.now();
-//AUTO_UPDATE_URL = `https://api.update.rocks/update/github.com/rllola/electron-example/stable/win32/0.0.23`;
-AUTO_UPDATE_URL = 'https://6e-e7one.coherencedigital.com/tuo_madmapper/0.0.23.json?t=' + Date.now();
-log.info(`AUTO_UPDATE_URL:` + AUTO_UPDATE_URL  + `, appversion: ` + APP_VERSION);
+const log = logger.info;
+ 
+import path from "path";
+import fs from "fs";
 
+// Set global temporary directory for things like auto update downloads, creating it if it doesn't exist already.
+global.tempPath = path.join( app.getPath( "temp" ), "NTWRK" );
+if ( !fs.existsSync( global.tempPath ) ) fs.mkdirSync( global.tempPath );
+log(global.tempPath);
 
-
-
+DownloadManager.register({
+  downloadFolder: global.tempPath
+});
+ 
+ 
 
 function init () {
-
-  const { net } = require('electron')
-  const request = net.request(AUTO_UPDATE_URL)
-  request.on('response', (response) => {
-    log.info(`STATUS: ${response.statusCode}`)
-    log.info(`HEADERS: ${JSON.stringify(response.headers)}`)
-    response.on('data', (chunk) => {
-      log.info(`BODY: ${chunk}`)
-    })
-    response.on('end', () => {
-      log.info('No more data in response.')
-    })
-  })
-  request.end()
+ 
   
   if (process.platform === 'linux') {
-    log.info('Auto updates not available on linux')
+    logger.info('Auto updates not available on linux')
   } else {
-    log.info('initDarwinWin32: ' + AUTO_UPDATE_URL)
+    logger.info('initDarwinWin32: ')
     initDarwinWin32()
   }
 }
@@ -46,25 +37,25 @@ function init () {
 function initDarwinWin32 () {
   electron.autoUpdater.on(
     'error',
-    (err) => log.info(`Update error: ${err.message}`))
+    (err) => logger.info(`Update error: ${err.message}`))
 
   electron.autoUpdater.on(
     'checking-for-update',
-    () => log.info('Checking for update' ))
+    () => logger.info('Checking for update' ))
 
   electron.autoUpdater.on(
     'update-available',
-    () => log.info('Update available'))
+    () => logger.info('Update available'))
 
   electron.autoUpdater.on(
     'update-not-available',
-    () => log.info('No update available'))
+    () => logger.info('No update available'))
 
   // Ask the user if update is available
   electron.autoUpdater.on(
     'update-downloaded',
     (event, releaseNotes, releaseName) => {
-      log.info('Update downloaded')
+      logger.info('Update downloaded')
       dialog.showMessageBox({
         type: 'question',
         buttons: ['Update', 'Cancel'],
@@ -78,10 +69,33 @@ function initDarwinWin32 () {
       })
     }
   )
- 
 
-  electron.autoUpdater.setFeedURL(AUTO_UPDATE_URL)
-  electron.autoUpdater.checkForUpdates()
+  var links = [
+    'https://6e-e7one.coherencedigital.com/tuo_madmapper/0.0.2/electron_example-0.0.2-full.nupkg',
+    'https://6e-e7one.coherencedigital.com/tuo_madmapper/0.0.2/RELEASES',
+  ];
+
+  //Bulk file download    
+  DownloadManager.bulkDownload({
+      urls: links, 
+  }, function (error, finished, errors) {
+      if (error) {
+          log("finished: " + finished);
+          log("errors: " + errors);
+          log(error);
+          return;
+      }
+
+      log("all finished");
+
+      const feedURL = global.tempPath;
+
+      autoUpdater.setFeedURL( feedURL ); 
+      autoUpdater.checkForUpdates()
+  });
+  
+
+
 }
 
 module.exports = {

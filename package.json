@@ -1,7 +1,7 @@
 {
-  "name": "electron-example",
-  "productName": "electron-example",
-  "version": "0.0.23",
+  "name": "electron-autoupdater",
+  "productName": "electron-autoupdater",
+  "version": "0.0.1",
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "electron-compile": "^6.4.4",
+    "electron-download-manager": "^2.1.2",
     "electron-is-dev": "^1.0.1",
     "electron-log": "^4.2.2",
     "electron-squirrel-startup": "^1.0.0",

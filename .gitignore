@@ -1,4 +1,4 @@
 node_modules
 out
-electron-example.log
+electron-autoupdater.log
 *.pfx

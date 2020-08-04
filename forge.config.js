@@ -27,7 +27,7 @@ module.exports = {
   "electronInstallerRedhat": {},
   "github_repository": {
     "owner": "tuo",
-    "name": "electron-example"
+    "name": "electron-autoupdater"
   },
   "windowsStoreConfig": {
     "packageName": "",
