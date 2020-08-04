@@ -26,6 +26,36 @@ Good post from [joshuapinter](https://github.com/electron/electron/issues/5020#i
 
 
 
+![v0.0.1](https://github.com/tuo/custom-electron-updater/blob/master/b234d5aa7a8a1aa57c69bbe4cd346d01.jpg?raw=true)
+![v.0.0.2 after quit and install, it will automatically start app with new version](https://github.com/tuo/custom-electron-updater/blob/master/55b86020e1530920e6fd9b86fbe5aa4a.jpg?raw=true)
+![code](https://github.com/tuo/custom-electron-updater/blob/master/Screenshot%202020-08-04%20at%2012.07.22.png?raw=true)
+![videos](https://github.com/tuo/custom-electron-updater/blob/master/video_20200804_115433_cps.mp4?raw=true)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>
 ORIGIN REPO:
 
 
