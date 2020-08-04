@@ -1,6 +1,6 @@
 import electron, {dialog, app, autoUpdater} from 'electron'
 const APP_VERSION = require('../package.json').version
-//import log from 'log-to-file'
+//import log from 'log-to-file' 
 
 const logger = require("electron-log")
 logger.transports.file.level = "info"
@@ -55,18 +55,25 @@ function initDarwinWin32 () {
   electron.autoUpdater.on(
     'update-downloaded',
     (event, releaseNotes, releaseName) => {
-      logger.info('Update downloaded')
-      dialog.showMessageBox({
-        type: 'question',
-        buttons: ['Update', 'Cancel'],
-        defaultId: 0,
-        message: `Version ${releaseName} is available, do you want to install it now?`,
-        title: 'Update available'
-      }, response => {
-        if (response === 0) {
-          electron.autoUpdater.quitAndInstall()
-        }
-      })
+      logger.info(`Update available ${releaseName}, now to install and restart`)
+      
+
+      electron.autoUpdater.quitAndInstall()
+
+
+
+
+      // dialog.showMessageBox({
+      //   type: 'question',
+      //   buttons: ['Update', 'Cancel'],
+      //   defaultId: 0,
+      //   message: `Version ${releaseName} is available, do you want to install it now?`,
+      //   title: 'Update available'
+      // }, response => {
+      //   if (response === 0) {
+      //     electron.autoUpdater.quitAndInstall()
+      //   }
+      // })
     }
   )
 
