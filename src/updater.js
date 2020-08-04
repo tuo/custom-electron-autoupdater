@@ -78,8 +78,8 @@ function initDarwinWin32 () {
   )
 
   var links = [
-    'https://6e-e7one.coherencedigital.com/tuo_madmapper/0.0.2/electron_example-0.0.2-full.nupkg',
-    'https://6e-e7one.coherencedigital.com/tuo_madmapper/0.0.2/RELEASES',
+    'https://6e-e7one.coherencedigital.com/tuo_madmapper/0.0.3/electron_example-0.0.3-full.nupkg',
+    'https://6e-e7one.coherencedigital.com/tuo_madmapper/0.0.3/RELEASES',
   ];
 
   //Bulk file download    
